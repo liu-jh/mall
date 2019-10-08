@@ -1,0 +1,46 @@
+<template>
+  <swiper>
+    <swiper-item v-for='item in banners'>
+      <a :href="item.link">
+        <img :src="item.image" alt="" @load='imgLoad'>
+      </a>
+    </swiper-item>
+  </swiper>
+</template>
+
+<script>
+  import {Swiper , SwiperItem} from '../../../components/common/swiper/index.js'
+
+  export default{
+    name:'HomeSwiper',
+    props:{
+      banners:{
+        type:Array,
+        default(){
+          return []
+        }
+      }
+    },
+    components:{
+      Swiper,
+      SwiperItem
+    },
+    data(){
+      return {
+        isLoad : false
+      }
+    },
+		//监听图片是否加载完成,只发送一次事件
+		methods:{
+			imgLoad(){
+        if (!this.isLoad){
+          this.$emit('swiperImgLoad')
+          this.isLoad = true
+        }
+			}
+		}
+  }
+</script>
+
+<style>
+</style>
